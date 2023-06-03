@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dnademo-staging-181240-authRole",
+      "UnauthRoleArn": "arn:aws:iam::340703988221:role/amplify-dnademo-staging-181240-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::340703988221:role/amplify-dnademo-staging-181240-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-dnademo-staging-181240-deployment",
+      "UnauthRoleName": "amplify-dnademo-staging-181240-unauthRole",
+      "StackName": "amplify-dnademo-staging-181240",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:340703988221:stack/amplify-dnademo-staging-181240/e8f06aa0-f739-11ed-b252-0a64dd5120b2",
+      "AmplifyAppId": "dsga4l4apcyhz"
+    },
+    "categories": {
+      "auth": {
+        "dnademo2": {}
+      }
+    }
+  }
+}
