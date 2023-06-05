@@ -112,9 +112,14 @@ const data3 = [
 ];
 
 //바꿈
-const Profile = ({ navigation }) => {
-  const [user, setUser] = useState({ name: 'Lee' ,phone: '82+ 010-0000-0000', email: 'user@email.com', condition : 'nothing' });
+const Profile = ({ route }) => {
+
+  //get params
+  const {MEMBER} = route.params;
+  const { name, address, sex, age, feature } = MEMBER;
+
   const [selectedIndex, setSelectedIndex] = useState(0);
+
   const Tab = createBottomTabNavigator();
 
   const handleModify = () => {
@@ -135,27 +140,18 @@ const Profile = ({ navigation }) => {
   return (
     //navigation
     <SafeAreaView style={styles.container}>
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.navbarItem}>Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.navbarTitle}>User Profile</Text>
-        <TouchableOpacity onPress={handleModify}>
-          <Text style={styles.navbarItem}>Modify</Text>
-        </TouchableOpacity>
-      </View>
-
       <ScrollView>
       <View style={styles.content}>
         <View style ={styles.title}>
           <Image source={require('../assets/icon.png')} style={styles.profileImg} />
-          <Text style={styles.name}>ms. {user.name}</Text>
+          <Text style={styles.name}>{name}</Text>
         </View>
         
         <View style={styles.userInfo}>
-          <Text style={styles.info}>Phone: {user.phone}</Text>
-          <Text style={styles.info}>Email: {user.email}</Text>
-          <Text style={styles.info}>Condition: {user.condition}</Text>
+          <Text style={styles.info}>Address: {address}</Text>
+          <Text style={styles.info}>Sex: {sex}</Text>
+          <Text style={styles.info}>Age: {age}</Text>
+          <Text style={styles.info}>Condition: {feature}</Text>
 
         </View>
 
@@ -220,17 +216,6 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  navbar: {
-    width: '100%',
-    height: 60,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
   },
   navbarItem: {
     fontSize: 16,

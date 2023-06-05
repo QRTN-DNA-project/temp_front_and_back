@@ -19,7 +19,6 @@ import { useAuthenticator } from '@aws-amplify/ui-react-native';
 /////////////////////
 
 import { useNavigation } from '@react-navigation/native';
-import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator()
