@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Button } from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Alert } from 'react-native';
-//바꿈
 import Constants from 'expo-constants';
+import CustomButton from './CustomButton';
+
+//Test
+import { DataStore } from '@aws-amplify/datastore';
+import { TEST } from './models';
+//Test/
+
 const screenWidth = Dimensions.get("window").width;
 import {LineChart,
   PieChart,
@@ -111,7 +117,7 @@ const data3 = [
 
 ];
 
-//바꿈
+
 const Profile = ({ route }) => {
 
   //get params
@@ -121,6 +127,7 @@ const Profile = ({ route }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const Tab = createBottomTabNavigator();
+
 
   const handleModify = () => {
     // handle Profile Modification button press
@@ -135,6 +142,36 @@ const Profile = ({ route }) => {
   const handleReport = () => {
     // handle Report button press
     Alert.alert('Report Button Pressed', 'You pressed the button!');
+  };
+
+  const [displayImage, setDisplayImage] = useState(false);
+
+  async function OnQuery() {
+    try {
+      const result = await DataStore.query(TEST); // await를 사용하여 비동기 처리
+      return result[2].count;
+    } catch (error) {
+      console.log(error); // 오류 처리
+      return null;
+    }
+  };
+  const DisplayStatus = async(setDisplayImage) => {
+    const number = await OnQuery();
+    console.log(number);
+
+    let imageSource;
+  if (number === 0) {
+    imageSource = require('../assets/icon1.png');
+  } else if (number === 2) {
+    imageSource = require('../assets/icon2.png');
+  } else if (number === 5) {
+    imageSource = require('../assets/icon3.png');
+  } else {
+    imageSource = null;
+  }
+
+  setDisplayImage(imageSource);
+
   };
 
   return (
@@ -153,6 +190,17 @@ const Profile = ({ route }) => {
           <Text style={styles.info}>Age: {age}</Text>
           <Text style={styles.info}>Condition: {feature}</Text>
 
+          <CustomButton
+          buttonColor = {'#023e71'}
+          title={'current status'}
+          onPress={() => DisplayStatus(setDisplayImage)}
+        />
+
+        {displayImage && displayImage !== null && (
+          <View>
+            <Image source={displayImage} style={styles.profileImg} />
+          </View>
+        )}
         </View>
 
         <SegmentedControlTab

@@ -45,7 +45,6 @@ const Header = () => (
 );
 
 
-
 const AddMEMBERModal = ({ modalVisible, setModalVisible }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
