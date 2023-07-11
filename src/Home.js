@@ -51,6 +51,7 @@ const AddMEMBERModal = ({ modalVisible, setModalVisible }) => {
   const [sex, setSex] = useState('');
   const [age, setAge] = useState('');
   const [feature, setFeature] = useState('');
+  const [number, setNumber] = useState('');
 
   async function addMEMBER() {
     await DataStore.save(
@@ -60,6 +61,7 @@ const AddMEMBERModal = ({ modalVisible, setModalVisible }) => {
            sex,
            age,
            feature,
+           number,
         })
     );
     setModalVisible(false);
@@ -68,6 +70,7 @@ const AddMEMBERModal = ({ modalVisible, setModalVisible }) => {
     setSex('');
     setAge('');
     setFeature('');
+    setNumber('');
   }
 
   function closeModal() {
@@ -109,6 +112,11 @@ const AddMEMBERModal = ({ modalVisible, setModalVisible }) => {
           <TextInput
             onChangeText={setFeature}
             placeholder="특이사항"
+            style={styles.modalInput}
+          />
+          <TextInput
+            onChangeText={setNumber}
+            placeholder="전화번호"
             style={styles.modalInput}
           />
           <Pressable onPress={addMEMBER} style={styles.buttonContainer}>

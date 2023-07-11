@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Button } from 'react-native';
+import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Button, Linking } from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Alert } from 'react-native';
@@ -122,7 +122,7 @@ const Profile = ({ route }) => {
 
   //get params
   const {MEMBER} = route.params;
-  const { name, address, sex, age, feature } = MEMBER;
+  const { name, address, sex, age, feature, number } = MEMBER;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -186,6 +186,7 @@ const Profile = ({ route }) => {
         
         <View style={styles.userInfo}>
           <Text style={styles.info}>Address: {address}</Text>
+          <Text style={styles.info}>Phone: {number}</Text>
           <Text style={styles.info}>Sex: {sex}</Text>
           <Text style={styles.info}>Age: {age}</Text>
           <Text style={styles.info}>Condition: {feature}</Text>
@@ -250,11 +251,11 @@ const Profile = ({ route }) => {
       </ScrollView>
 
       <View style={styles.tabBar}>
-        <TouchableOpacity onPress={handlePhoneCall}>
+        <TouchableOpacity onPress={()=>{Linking.openURL(`tel:${number}`)}}>
           <Text>Phone Call</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleReport}>
-          <Text>Report</Text>
+        <TouchableOpacity onPress={()=>{Linking.openURL(`sms:01000000000`)}}>
+          <Text>Report to 119</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

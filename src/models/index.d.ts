@@ -49,6 +49,7 @@ type EagerMEMBER = {
   readonly sex: string;
   readonly age: string;
   readonly feature?: string | null;
+  readonly number?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -64,6 +65,7 @@ type LazyMEMBER = {
   readonly sex: string;
   readonly age: string;
   readonly feature?: string | null;
+  readonly number?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

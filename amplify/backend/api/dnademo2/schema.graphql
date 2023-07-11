@@ -12,5 +12,5 @@ type MEMBER @model @auth(rules: [{allow: public}]) {
   sex: String!
   age: String!
   feature: String
-}
- 
+  number: String
+} 
