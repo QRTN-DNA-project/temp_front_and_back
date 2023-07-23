@@ -6,15 +6,45 @@ import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 
 
+type EagerEMERGENCY = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EMERGENCY, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly is_emergency?: number | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEMERGENCY = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EMERGENCY, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly is_emergency?: number | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type EMERGENCY = LazyLoading extends LazyLoadingDisabled ? EagerEMERGENCY : LazyEMERGENCY
+
+export declare const EMERGENCY: (new (init: ModelInit<EMERGENCY>) => EMERGENCY) & {
+  copyOf(source: EMERGENCY, mutator: (draft: MutableModel<EMERGENCY>) => MutableModel<EMERGENCY> | void): EMERGENCY;
+}
+
 type EagerTEST = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<TEST, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly time: string;
-  readonly count: number;
-  readonly class: string;
+  readonly member_id: string;
+  readonly index: number;
+  readonly calender: string;
+  readonly time_point?: string | null;
+  readonly occurence?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -25,9 +55,11 @@ type LazyTEST = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly time: string;
-  readonly count: number;
-  readonly class: string;
+  readonly member_id: string;
+  readonly index: number;
+  readonly calender: string;
+  readonly time_point?: string | null;
+  readonly occurence?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -50,6 +82,7 @@ type EagerMEMBER = {
   readonly age: string;
   readonly feature?: string | null;
   readonly number?: string | null;
+  readonly current?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -66,6 +99,7 @@ type LazyMEMBER = {
   readonly age: string;
   readonly feature?: string | null;
   readonly number?: string | null;
+  readonly current?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

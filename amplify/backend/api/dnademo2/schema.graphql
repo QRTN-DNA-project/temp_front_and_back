@@ -1,8 +1,15 @@
+type EMERGENCY @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  is_emergency: Int
+}
+
 type TEST @model @auth(rules: [{allow: public}]) {
   id: ID!
-  time: String!
-  count: Int!
-  class: String!
+  member_id: String!
+  index: Int!
+  calender: String!
+  time_point: String
+  occurence: Int
 }
 
 type MEMBER @model @auth(rules: [{allow: public}]) {
@@ -13,4 +20,5 @@ type MEMBER @model @auth(rules: [{allow: public}]) {
   age: String!
   feature: String
   number: String
+  current: Int
 } 

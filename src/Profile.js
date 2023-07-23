@@ -9,6 +9,8 @@ import CustomButton from './CustomButton';
 //Test
 import { DataStore } from '@aws-amplify/datastore';
 import { TEST } from './models';
+import { MEMBER }from './models';
+import { EMERGENCY } from './models';
 //Test/
 
 const screenWidth = Dimensions.get("window").width;
@@ -121,8 +123,8 @@ const data3 = [
 const Profile = ({ route }) => {
 
   //get params
-  const {MEMBER} = route.params;
-  const { name, address, sex, age, feature, number } = MEMBER;
+  // const {MEMBER} = route.params;
+  const {id, name, address, sex, age, feature, number, current } = route.params["MEMBER"];
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -146,26 +148,33 @@ const Profile = ({ route }) => {
 
   const [displayImage, setDisplayImage] = useState(false);
 
-  async function OnQuery() {
+  async function OnQuery(id) {
     try {
-      const result = await DataStore.query(TEST); // await를 사용하여 비동기 처리
-      return result[2].count;
-    } catch (error) {
-      console.log(error); // 오류 처리
+      const members = await DataStore.query( MEMBER, c => c.id.eq(id));
+      if (members && members.length > 0) {
+        const member = members[0];
+        console.log(member);
+        return member.current;
+      }
+      console.log('id로 찾을 수 있는 member 없음');
+      return null; // 해당 id와 일치하는 멤버가 없을 경우 null 반환
+    }catch (error) {
+      console.log(error);
       return null;
     }
   };
-  const DisplayStatus = async(setDisplayImage) => {
-    const number = await OnQuery();
-    console.log(number);
+
+  const DisplayStatus = async(id, setDisplayImage) => {
+    const number = await OnQuery(id);
+    if(!number)number=0;
 
     let imageSource;
-  if (number === 0) {
-    imageSource = require('../assets/icon1.png');
+  if (number === 1) {
+    imageSource = require('../assets/walking.png');
   } else if (number === 2) {
-    imageSource = require('../assets/icon2.png');
-  } else if (number === 5) {
-    imageSource = require('../assets/icon3.png');
+    imageSource = require('../assets/toilet.png');
+  } else if (number === 3) {
+    imageSource = require('../assets/shower.png');
   } else {
     imageSource = null;
   }
@@ -190,16 +199,15 @@ const Profile = ({ route }) => {
           <Text style={styles.info}>Sex: {sex}</Text>
           <Text style={styles.info}>Age: {age}</Text>
           <Text style={styles.info}>Condition: {feature}</Text>
-
           <CustomButton
-          buttonColor = {'#023e71'}
+          buttonColor = {'#3b8686'}
           title={'current status'}
-          onPress={() => DisplayStatus(setDisplayImage)}
+          onPress={() => DisplayStatus(id, setDisplayImage)}
         />
 
         {displayImage && displayImage !== null && (
           <View>
-            <Image source={displayImage} style={styles.profileImg} />
+            <Image source={displayImage} style={styles.statusImg} />
           </View>
         )}
         </View>
@@ -308,9 +316,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  segImg: {
+  statusImg: {
     width: 300,
-    height: 300,
+    height: 150,
+    alignItems: 'center',
   },
   segmentedControl: {
     width: '90%',

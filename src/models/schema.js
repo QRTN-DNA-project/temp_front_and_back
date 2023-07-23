@@ -1,5 +1,64 @@
 export const schema = {
     "models": {
+        "EMERGENCY": {
+            "name": "EMERGENCY",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "is_emergency": {
+                    "name": "is_emergency",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "EMERGENCIES",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "TEST": {
             "name": "TEST",
             "fields": {
@@ -10,25 +69,39 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "time": {
-                    "name": "time",
+                "member_id": {
+                    "name": "member_id",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "count": {
-                    "name": "count",
+                "index": {
+                    "name": "index",
                     "isArray": false,
                     "type": "Int",
                     "isRequired": true,
                     "attributes": []
                 },
-                "class": {
-                    "name": "class",
+                "calender": {
+                    "name": "calender",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "time_point": {
+                    "name": "time_point",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "occurence": {
+                    "name": "occurence",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -125,6 +198,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "current": {
+                    "name": "current",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -171,5 +251,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "002ff3c994b98ada3cc4763ce968d41e"
+    "version": "2de6d56c56032b2fb12fb86659b644e3"
 };
