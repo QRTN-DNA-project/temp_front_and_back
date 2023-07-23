@@ -8,9 +8,9 @@ import CustomButton from './CustomButton';
 
 //Test
 import { DataStore } from '@aws-amplify/datastore';
-import { TEST } from './models';
 import { MEMBER }from './models';
-import { EMERGENCY } from './models';
+// import { TEST } from './models';
+// import { EMERGENCY } from './models';
 //Test/
 
 const screenWidth = Dimensions.get("window").width;
@@ -170,11 +170,11 @@ const Profile = ({ route }) => {
 
     let imageSource;
   if (number === 1) {
-    imageSource = require('../assets/walking.png');
+    imageSource = require('../assets/footsteps.png');
   } else if (number === 2) {
     imageSource = require('../assets/toilet.png');
   } else if (number === 3) {
-    imageSource = require('../assets/shower.png');
+    imageSource = require('../assets/tv.png');
   } else {
     imageSource = null;
   }
@@ -189,7 +189,7 @@ const Profile = ({ route }) => {
       <ScrollView>
       <View style={styles.content}>
         <View style ={styles.title}>
-          <Image source={require('../assets/icon.png')} style={styles.profileImg} />
+          <Image source={require('../assets/profile.png')} style={styles.profileImg} />
           <Text style={styles.name}>{name}</Text>
         </View>
         
@@ -200,8 +200,8 @@ const Profile = ({ route }) => {
           <Text style={styles.info}>Age: {age}</Text>
           <Text style={styles.info}>Condition: {feature}</Text>
           <CustomButton
-          buttonColor = {'#3b8686'}
-          title={'current status'}
+          buttonColor = {'#2f7bf7'}
+          title={'현재 행동'}
           onPress={() => DisplayStatus(id, setDisplayImage)}
         />
 
@@ -262,7 +262,7 @@ const Profile = ({ route }) => {
         <TouchableOpacity onPress={()=>{Linking.openURL(`tel:${number}`)}}>
           <Text>Phone Call</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{Linking.openURL(`sms:01000000000`)}}>
+        <TouchableOpacity onPress={()=>{Linking.openURL(`sms:119`)}}>
           <Text>Report to 119</Text>
         </TouchableOpacity>
       </View>
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   },
   statusImg: {
     width: 300,
-    height: 150,
+    height: 130,
     alignItems: 'center',
   },
   segmentedControl: {
