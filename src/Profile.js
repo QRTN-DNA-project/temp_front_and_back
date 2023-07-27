@@ -9,8 +9,6 @@ import CustomButton from './CustomButton';
 //Test
 import { DataStore } from '@aws-amplify/datastore';
 import { MEMBER }from './models';
-// import { TEST } from './models';
-// import { EMERGENCY } from './models';
 //Test/
 
 const screenWidth = Dimensions.get("window").width;
@@ -48,6 +46,28 @@ const pieChartConfig = {
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false // optional
+};
+
+import Svg, { Rect } from 'react-native-svg';
+
+const HorizontalBarChart = ({ data, labels, barWidth, barHeight, barColor, labelColor }) => {
+  return (
+    <View>
+      <Svg width={barWidth} height={barHeight * data.length}>
+        {data.map((value, index) => (
+          <React.Fragment key={index}>
+            <Rect
+              x="0"
+              y={index * barHeight}
+              width={value}
+              height={barHeight - 2} // 여백을 조절하여 막대 사이의 간격 설정
+              fill={barColor}
+            />
+          </React.Fragment>
+        ))}
+      </Svg>
+    </View>
+  );
 };
 
 const data = {
@@ -118,7 +138,12 @@ const data3 = [
   },
 
 ];
-
+const data4 = [100, 150];
+const labels = ['기상효율', '규칙성'];
+const barWidth = 250;
+const barHeight = 30;
+const barColor = '#2f7bf7';
+const labelColor = 'black';
 
 const Profile = ({ route }) => {
 
@@ -147,6 +172,7 @@ const Profile = ({ route }) => {
   };
 
   const [displayImage, setDisplayImage] = useState(false);
+  const [displayStatusComment, setDisplayStatusComment] = useState(false);
 
   async function OnQuery(id) {
     try {
@@ -164,22 +190,27 @@ const Profile = ({ route }) => {
     }
   };
 
-  const DisplayStatus = async(id, setDisplayImage) => {
+  const DisplayStatus = async(id, setDisplayImage, setDisplayStatusComment) => {
     const number = await OnQuery(id);
     if(!number)number=0;
 
     let imageSource;
+    let textSource;
   if (number === 1) {
     imageSource = require('../assets/footsteps.png');
+    textSource = '발소리';
   } else if (number === 2) {
     imageSource = require('../assets/toilet.png');
+    textSource = '화장실';
   } else if (number === 3) {
     imageSource = require('../assets/tv.png');
+    textSource = '텔레비전';
   } else {
     imageSource = null;
   }
 
   setDisplayImage(imageSource);
+  setDisplayStatusComment(textSource);
 
   };
 
@@ -202,14 +233,42 @@ const Profile = ({ route }) => {
           <CustomButton
           buttonColor = {'#2f7bf7'}
           title={'현재 행동'}
-          onPress={() => DisplayStatus(id, setDisplayImage)}
+          onPress={() => DisplayStatus(id, setDisplayImage, setDisplayStatusComment)}
         />
 
         {displayImage && displayImage !== null && (
-          <View>
+          <View style={styles.status}>
             <Image source={displayImage} style={styles.statusImg} />
+            <Text style={styles.statusComment}>현재 소리: {displayStatusComment}</Text>
           </View>
         )}
+        </View>
+
+        <View style={styles.elem}>
+          <View style={styles.statistics}>
+              <Text style={styles.statistics_number}>74</Text>
+          </View>
+        </View>
+        <View style={styles.HorizontalBarChartContainer}>
+            <HorizontalBarChart data={data4} labels={labels} barWidth={barWidth} barHeight={barHeight} barColor={barColor} labelColor={labelColor} />
+        </View>
+
+        <View style={styles.elem}>
+          <View style={styles.user}>
+            <Text style={styles.statistics_title}>{labels[0]}</Text>
+          </View>
+          <View>
+            <Text style={styles.userComment} >{data4[0]}%</Text>
+          </View>
+        </View>
+
+        <View style={styles.elem}>
+          <View style={styles.user}>
+            <Text style={styles.statistics_title}>{labels[1]}</Text>
+          </View>
+          <View>
+            <Text style={styles.userComment}>{data4[1]}%</Text>
+          </View>
         </View>
 
         <SegmentedControlTab
@@ -256,6 +315,7 @@ const Profile = ({ route }) => {
         )}
       </View>
 
+
       </ScrollView>
 
       <View style={styles.tabBar}>
@@ -300,6 +360,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 20,
     fontSize: 30,
+    fontWeight: 'bold',
   },
   userInfo: {
     flex: 0.5,
@@ -316,10 +377,25 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  statusImg: {
-    width: 300,
-    height: 130,
+  status:{
+    width: '100%',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    borderColor:'#eee',
+    borderBottomWidth:0.5,
+    padding: 5,
+    backgroundColor:'white',
+  },
+  statusImg: {
+    width: 150,
+    height: 150,
+    alignItems: 'center',
+  },
+  statusComment:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingRight: 20,
   },
   segmentedControl: {
     width: '90%',
@@ -349,6 +425,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
     padding: 8,
+  },
+  elem: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderColor:'#eee',
+    borderBottomWidth:0.5,
+    padding: 5,
+  },
+  statistics: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  userComment: {
+    padding:8,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  statistics_number: {
+    paddingLeft: 20,
+    fontSize: 50,
+    fontWeight: "bold",
+    borderRadius: 25,
+  },
+  statistics_title: {
+    paddingLeft: 20,
+    fontSize: 20,
+  },
+  HorizontalBarChartContainer: {
+    
   },
 });
 
